@@ -1,4 +1,4 @@
-﻿using Clean.Architecture.Core.ProjectAggregate;
+﻿using Clean.Architecture.Core.UserAggregate;
 using Xunit;
 
 namespace Clean.Architecture.IntegrationTests.Data;
@@ -8,18 +8,25 @@ public class EfRepositoryAdd : BaseEfRepoTestFixture
   [Fact]
   public async Task AddsProjectAndSetsId()
   {
-    var testProjectName = "testProject";
-    var testProjectStatus = PriorityStatus.Backlog;
+    // create the object
+
+    var testClientUserName = "testProject";
+
+    var testClientPassword = "198874598";
+
     var repository = GetRepository();
-    var project = new Project(testProjectName, testProjectStatus);
 
-    await repository.AddAsync(project);
+    var User = new ClientUser(testClientUserName, testClientPassword);
 
-    var newProject = (await repository.ListAsync())
+    await repository.AddAsync(User);
+
+    var newUser = (await repository.ListAsync())
                     .FirstOrDefault();
 
-    Assert.Equal(testProjectName, newProject?.Name);
-    Assert.Equal(testProjectStatus, newProject?.Priority);
-    Assert.True(newProject?.Id > 0);
+    // compare the values with created ones
+
+    Assert.Equal(testClientUserName, newUser?.UserName);
+    Assert.Equal(testClientPassword, newUser?.Password);
+    Assert.True(newUser?.Id != null);
   }
 }

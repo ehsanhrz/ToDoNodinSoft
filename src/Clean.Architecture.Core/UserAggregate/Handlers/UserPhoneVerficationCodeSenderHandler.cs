@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Clean.Architecture.Core.ContributorAggregate.Events;
 using Clean.Architecture.Core.Interfaces;
 using Clean.Architecture.Core.UserAggregate.Events;
 using Clean.Architecture.SharedKernel.Interfaces;

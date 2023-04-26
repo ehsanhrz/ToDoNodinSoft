@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
-using Clean.Architecture.Core.ContributorAggregate;
-using Clean.Architecture.Core.ProjectAggregate;
+using Clean.Architecture.Core.UserAggregate;
 using Clean.Architecture.SharedKernel;
 using Clean.Architecture.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +15,10 @@ public class AppDbContext : DbContext
       : base(options)
   {
     _dispatcher = dispatcher;
-  }
+  } 
+  public DbSet<ClientUser> clientUsers => Set<ClientUser>();
 
-  public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
-  public DbSet<Project> Projects => Set<Project>();
-  public DbSet<Contributor> Contributors => Set<Contributor>(); 
+  public DbSet<PhoneValidation> phoneValidations => Set<PhoneValidation>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

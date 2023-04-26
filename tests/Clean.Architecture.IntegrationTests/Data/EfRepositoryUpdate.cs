@@ -1,4 +1,4 @@
-﻿using Clean.Architecture.Core.ProjectAggregate;
+﻿using Clean.Architecture.Core.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -10,26 +10,32 @@ public class EfRepositoryUpdate : BaseEfRepoTestFixture
   public async Task UpdatesItemAfterAddingIt()
   {
     // add a project
-    var repository = GetRepository();
-    var initialName = Guid.NewGuid().ToString();
-    var project = new Project(initialName, PriorityStatus.Backlog);
 
-    await repository.AddAsync(project);
+    var testClientUserName = "testProject";
+
+    var testClientPassword = "198874598";
+
+    var repository = GetRepository();
+
+    var User = new ClientUser(testClientUserName, testClientPassword);
+
+    await repository.AddAsync(User);
 
     // detach the item so we get a different instance
-    _dbContext.Entry(project).State = EntityState.Detached;
+    _dbContext.Entry(User).State = EntityState.Detached;
 
     // fetch the item and update its title
     var newProject = (await repository.ListAsync())
-        .FirstOrDefault(project => project.Name == initialName);
+        .FirstOrDefault(project => project.UserName == testClientUserName);
     if (newProject == null)
     {
       Assert.NotNull(newProject);
       return;
     }
-    Assert.NotSame(project, newProject);
+    
     var newName = Guid.NewGuid().ToString();
-    newProject.UpdateName(newName);
+    
+    newProject.Name = newName;
 
     // Update the item
     await repository.UpdateAsync(newProject);
@@ -39,8 +45,9 @@ public class EfRepositoryUpdate : BaseEfRepoTestFixture
         .FirstOrDefault(project => project.Name == newName);
 
     Assert.NotNull(updatedItem);
-    Assert.NotEqual(project.Name, updatedItem?.Name);
-    Assert.Equal(project.Priority, updatedItem?.Priority);
+    Assert.NotEqual(newProject.Name, updatedItem?.Name);
+    Assert.Equal(newProject.UserName, updatedItem?.UserName);
     Assert.Equal(newProject.Id, updatedItem?.Id);
+    Assert.Equal(newProject.Password, updatedItem?.Password);
   }
 }

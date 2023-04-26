@@ -1,4 +1,4 @@
-﻿using Clean.Architecture.Core.ProjectAggregate;
+﻿using Clean.Architecture.Core.UserAggregate;
 using Xunit;
 
 namespace Clean.Architecture.IntegrationTests.Data;
@@ -9,16 +9,21 @@ public class EfRepositoryDelete : BaseEfRepoTestFixture
   public async Task DeletesItemAfterAddingIt()
   {
     // add a project
+    var testClientUserName = "testProject";
+
+    var testClientPassword = "198874598";
+
     var repository = GetRepository();
-    var initialName = Guid.NewGuid().ToString();
-    var project = new Project(initialName, PriorityStatus.Backlog);
-    await repository.AddAsync(project);
+
+    var User = new ClientUser(testClientUserName, testClientPassword);
+
+    await repository.AddAsync(User);
 
     // delete the item
-    await repository.DeleteAsync(project);
+    await repository.DeleteAsync(User);
 
     // verify it's no longer there
     Assert.DoesNotContain(await repository.ListAsync(),
-        project => project.Name == initialName);
+        project => project.UserName == testClientUserName);
   }
 }

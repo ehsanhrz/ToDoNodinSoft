@@ -1,4 +1,5 @@
-﻿using Clean.Architecture.Core.ProjectAggregate;
+﻿
+using Clean.Architecture.Core.UserAggregate;
 using Clean.Architecture.Infrastructure.Data;
 using Clean.Architecture.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +37,8 @@ public abstract class BaseEfRepoTestFixture
     return builder.Options;
   }
 
-  protected EfRepository<Project> GetRepository()
+  protected EfRepository<ClientUser> GetRepository()
   {
-    return new EfRepository<Project>(_dbContext);
+    return new EfRepository<ClientUser>(_dbContext);
   }
 }
