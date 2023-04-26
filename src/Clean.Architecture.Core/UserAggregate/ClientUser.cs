@@ -26,7 +26,12 @@ public class ClientUser : EntityBase, IAggregateRoot
     this.PhoneNumberVerfied= false;
   }
 
-  public bool UserVerfied { get; set; }
+  public void VerifiUser()
+  {
+    this.UserVerfied = true;
+    this.PhoneNumberVerfied = true;
+  }
+  public bool UserVerfied { get; private set; }
 
   public string Name { get; set; } = string.Empty;
 
@@ -36,11 +41,11 @@ public class ClientUser : EntityBase, IAggregateRoot
 
   public string UserName { get; set; } = string.Empty;
 
-  public bool EmailVerfied { get; set; }
+  public bool EmailVerfied { get; private set; }
 
-  public bool TwoStepLogin { get; set; }
+  public bool TwoStepLogin { get; private set; }
 
-  public bool PhoneNumberVerfied { get; set; }
+  public bool PhoneNumberVerfied { get; private set; }
 
   public string PhoneNumber { get; set; } = string.Empty;
 }

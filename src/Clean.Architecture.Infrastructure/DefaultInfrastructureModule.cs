@@ -98,6 +98,9 @@ public class DefaultInfrastructureModule : Module
     // NOTE: Add any development only services here
     builder.RegisterType<FakeEmailSender>().As<IEmailSender>()
       .InstancePerLifetimeScope();
+    builder.RegisterType<FakeSmsSender>().As<ICodeSender>()
+      .InstancePerLifetimeScope();
+
   }
 
   private void RegisterProductionOnlyDependencies(ContainerBuilder builder)

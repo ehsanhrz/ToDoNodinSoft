@@ -24,6 +24,16 @@ public class UserSignupService : IUserSignup
     _mediator = mediator;
   }
 
+  public Task<Result> CeckEmailVerficationCode(ClientUser user, int code)
+  {
+    throw new NotImplementedException();
+  }
+
+  public Task<Result> ChangeUserEmailForValidation(ClientUser user, string Email)
+  {
+    throw new NotImplementedException();
+  }
+
   public async Task<Result> ChangeUserPhoneNumberForValidation(ClientUser user, string PhoneNumber)
   {
     user.PhoneNumber = PhoneNumber;
@@ -58,6 +68,10 @@ public class UserSignupService : IUserSignup
     {
       if (SearchResult.ValidTime > DateTime.UtcNow)
       {
+        user.VerifiUser();
+
+        await _clientUserRepository.UpdateAsync(user);
+
         return Result.Success();
       }
       else
@@ -70,6 +84,11 @@ public class UserSignupService : IUserSignup
       return Result.Error("verfication code is not valid");
     }
 
+  }
+
+  public Task<Result> CheckUniqueEmail(string Email)
+  {
+    throw new NotImplementedException();
   }
 
   public async Task<Result> CheckUserNameUnique(string UserName)
@@ -105,6 +124,10 @@ public class UserSignupService : IUserSignup
 
   }
 
+  public Task<Result> FireEmailVerficationCodeSender(ClientUser user)
+  {
+    throw new NotImplementedException();
+  }
 
   public async Task<Result> FireVerficationCodeSenderEvent(ClientUser user)
   {
@@ -113,6 +136,11 @@ public class UserSignupService : IUserSignup
     await _mediator.Publish(CodeSenderEvent);
 
     return Result.Success();
+  }
+
+  public Task<Result> ResetEmailCodeVerficationsender(ClientUser user)
+  {
+    throw new NotImplementedException();
   }
 
   public async Task<Result> ResetVerficationCodeSenderEvent(ClientUser user)
@@ -143,7 +171,6 @@ public class UserSignupService : IUserSignup
     }
     catch { return Result.Error("internal Server Error"); }
     
-
   }
 
 }
