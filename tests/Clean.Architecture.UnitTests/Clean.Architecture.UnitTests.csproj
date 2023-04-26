@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Core\Services\ToDoItemSearchService_GetAllIncompleteItems.cs" />
-    <Compile Remove="Core\Services\ToDoItemSearchService_GetNextIncompleteItem.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
@@ -37,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Core\UserAggregate\Specifications\" />
     <Folder Include="Core\UserAggregate\Services\" />
-    <Folder Include="Core\Services\" />
   </ItemGroup>
 
   <ItemGroup>
