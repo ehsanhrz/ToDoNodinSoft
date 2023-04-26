@@ -9,7 +9,14 @@ using Clean.Architecture.SharedKernel;
 namespace Clean.Architecture.Core.UserAggregate;
 public class ClientUser : EntityBase, IAggregateRoot
 {
-  
+
+  public ClientUser(string UserName, string PassWord, string PhoneNumber)
+  {
+    this.UserName = UserName;
+    this.Password = PassWord;
+    this.PhoneNumber = PhoneNumber;
+  }
+
   public string Name { get; set; } = string.Empty;
 
   public string Password { get; set; } = string.Empty;

@@ -35,6 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\UserAggregate\Specifications\" />
+    <Folder Include="Core\UserAggregate\Services\" />
     <Folder Include="Core\Services\" />
   </ItemGroup>
 

@@ -26,11 +26,13 @@ public class ResetPhoneVerficationCodeSenderHandler : INotificationHandler<Reset
 
     int Code = CodeGenerator.Next(100000, 999999);
 
-    notification.phoneValidation.ResetCode(Code);
+    bool result = notification.phoneValidation.ResetCode(Code);
 
-    _repository.UpdateAsync(notification.phoneValidation,cancellationToken).Wait(cancellationToken);
+    if (result == true)
+    {
+      _repository.UpdateAsync(notification.phoneValidation, cancellationToken).Wait(cancellationToken);
 
-    await _codeSender.SendCode(Code, notification.phoneValidation.UserPhoneNumber);
-
+      await _codeSender.SendCode(Code, notification.phoneValidation.UserPhoneNumber);
+    }
   }
 }

@@ -16,7 +16,7 @@ public interface IUserSignup
 
   public Task<Result> ResetVerficationCodeSenderEvent(ClientUser user);
 
-  public Task<Result> CheckPhoneNumberVerficationCode(ClientUser user, string code);
+  public Task<Result> CheckPhoneNumberVerficationCode(ClientUser user, int code);
 
   public Task<Result> FireCreateUserEvent(ClientUser user);
   
