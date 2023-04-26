@@ -18,6 +18,8 @@ public interface IUserSignup
 
   public Task<Result> CheckPhoneNumberVerficationCode(ClientUser user, int code);
 
-  public Task<Result> FireCreateUserEvent(ClientUser user);
+  public Task<Result<ClientUser>> CreateUser(string UserName, string PassWord);
+
+  public Task<Result> ChangeUserPhoneNumberForValidation(ClientUser user, string PhoneNumber);
   
 }

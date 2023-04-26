@@ -17,6 +17,17 @@ public class ClientUser : EntityBase, IAggregateRoot
     this.PhoneNumber = PhoneNumber;
   }
 
+  public ClientUser(string UserName, string PassWord)
+  {
+    this.UserName= UserName;
+    this.Password= PassWord;
+    this.UserVerfied= false;
+    this.EmailVerfied= false;
+    this.PhoneNumberVerfied= false;
+  }
+
+  public bool UserVerfied { get; set; }
+
   public string Name { get; set; } = string.Empty;
 
   public string Password { get; set; } = string.Empty;
@@ -28,6 +39,8 @@ public class ClientUser : EntityBase, IAggregateRoot
   public bool EmailVerfied { get; set; }
 
   public bool TwoStepLogin { get; set; }
+
+  public bool PhoneNumberVerfied { get; set; }
 
   public string PhoneNumber { get; set; } = string.Empty;
 }

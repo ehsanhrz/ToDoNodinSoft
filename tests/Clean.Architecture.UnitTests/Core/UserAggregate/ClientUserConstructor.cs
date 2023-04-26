@@ -10,11 +10,11 @@ namespace Clean.Architecture.UnitTests.Core.UserAggregate;
 public class ClientUserConstructor
 {
   private readonly string _testUserName = "EhsanHrz";
-  private readonly string _testPassWord = "11235813Ehsan";
+  private readonly string _testPassWord = "987987987";
   private readonly string _testPhoneNumber = "09141178787";
   private ClientUser? _testClientUser;
 
-  private ClientUser CreateContributor()
+  private ClientUser CreateClientUser()
   {
     return new ClientUser(_testUserName, _testPassWord, _testPhoneNumber);
   }
@@ -22,7 +22,7 @@ public class ClientUserConstructor
   [Fact]
   public void InitializesUser()
   {
-    _testClientUser = CreateContributor();
+    _testClientUser = CreateClientUser();
 
     Assert.Equal(_testUserName, _testClientUser.UserName);
     Assert.Equal(_testPassWord, _testClientUser.Password);
