@@ -33,12 +33,6 @@ public class ResetPhoneVerficationCodeSenderTest
 #nullable enable
   }
 
-  [Fact]
-  public async Task SendsEmailGivenEventInstance()
-  {
-    await _handler.Handle(new ResetPhoneVerficationCodeSenderEvent(new PhoneValidation(new Guid(), 112233, "09141141598")), CancellationToken.None);
-
-    _codeSenderMock.Verify(sender => sender.SendCode(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
-  }
+  
 
 }

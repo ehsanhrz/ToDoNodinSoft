@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Clean.Architecture.Core.Interfaces;
 using Clean.Architecture.Core.UserAggregate.Events;
 using Clean.Architecture.SharedKernel;
@@ -21,6 +22,7 @@ public class ChangePhoneVerficationCodeSenderHandler : INotificationHandler<Chan
   }
   public async Task Handle(ChangePhoneVerficationCodeSenderEvent notification, CancellationToken cancellationToken)
   {
+    Guard.Against.Null(notification);
     var CodeGenerator = new Random();
 
     int Code = CodeGenerator.Next(100000, 999999);

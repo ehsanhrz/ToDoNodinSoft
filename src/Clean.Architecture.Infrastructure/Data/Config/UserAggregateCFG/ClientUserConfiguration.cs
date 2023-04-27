@@ -12,6 +12,7 @@ public class ClientUserConfiguration : IEntityTypeConfiguration<ClientUser>
 {
   public void Configure(EntityTypeBuilder<ClientUser> builder)
   {
+    builder.ToTable(nameof(ClientUser));
 
     builder.HasKey(p => p.Id);
 

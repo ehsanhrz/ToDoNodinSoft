@@ -104,11 +104,11 @@ public class UserSignupService : IUserSignup
     return Result.Success();
   }
 
-  public async Task<Result<ClientUser>> CreateUser(string UserName, string PassWord)
+  public async Task<Result<ClientUser>> CreateUser(string UserName, string PassWord, string PhoneNumber)
   {
     try
     {
-      var newUser = new ClientUser(UserName, PassWord);
+      var newUser = new ClientUser(UserName, PassWord, PhoneNumber);
 
       await _clientUserRepository.AddAsync(newUser);
 

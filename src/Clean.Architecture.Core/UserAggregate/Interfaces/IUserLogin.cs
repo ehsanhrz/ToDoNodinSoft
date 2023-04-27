@@ -8,7 +8,6 @@ using Ardalis.Result;
 namespace Clean.Architecture.Core.UserAggregate.Interfaces;
 public interface IUserLogin
 {
-  public Task<Result> CheckUserNameAndPassWordLogin(string UserName, string PassWord);
+  public Task<Result<ClientUser>> CheckUserNameAndPassWordLogin(string UserName, string PassWord);
   
-  public Task<Result> CreateJWTToken(ClientUser user);
 }

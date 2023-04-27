@@ -45,7 +45,7 @@ public class EfRepositoryUpdate : BaseEfRepoTestFixture
         .FirstOrDefault(project => project.Name == newName);
 
     Assert.NotNull(updatedItem);
-    Assert.NotEqual(newProject.Name, updatedItem?.Name);
+    Assert.NotEqual(User.Name, updatedItem?.Name);
     Assert.Equal(newProject.UserName, updatedItem?.UserName);
     Assert.Equal(newProject.Id, updatedItem?.Id);
     Assert.Equal(newProject.Password, updatedItem?.Password);

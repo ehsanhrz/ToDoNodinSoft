@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Clean.Architecture.Core.Interfaces;
+using Clean.Architecture.Core.Services;
 using Clean.Architecture.Core.UserAggregate.Interfaces;
 using Clean.Architecture.Core.UserAggregate.Services;
 
@@ -8,9 +10,17 @@ public class DefaultCoreModule : Module
 {
   protected override void Load(ContainerBuilder builder)
   {
-    
+
 
     builder.RegisterType<UserSignupService>()
       .As<IUserSignup>().InstancePerLifetimeScope();
+
+    builder.RegisterType<TokenProviderService>()
+      .As<ITokenProvider>().InstancePerLifetimeScope();
+
+    builder.RegisterType<UserLoginService>()
+      .As<IUserLogin>().InstancePerLifetimeScope();
+
+    
   }
 }

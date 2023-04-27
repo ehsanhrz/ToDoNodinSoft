@@ -5,22 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Clean.Architecture.SharedKernel.Interfaces;
 using Clean.Architecture.SharedKernel;
+using System.Text.Json.Serialization;
 
 namespace Clean.Architecture.Core.UserAggregate;
 public class ClientUser : EntityBase, IAggregateRoot
 {
 
-  public ClientUser(string UserName, string PassWord, string PhoneNumber)
+  [JsonConstructor]
+  public ClientUser() { }
+  public ClientUser(string UserName, string Password, string PhoneNumber)
   {
     this.UserName = UserName;
-    this.Password = PassWord;
+    this.Password = Password;
     this.PhoneNumber = PhoneNumber;
+    this.UserVerfied = false;
+    this.EmailVerfied = false;
+    this.PhoneNumberVerfied = false;
   }
 
-  public ClientUser(string UserName, string PassWord)
+  public ClientUser(string UserName, string Password)
   {
     this.UserName= UserName;
-    this.Password= PassWord;
+    this.Password= Password;
     this.UserVerfied= false;
     this.EmailVerfied= false;
     this.PhoneNumberVerfied= false;
@@ -48,4 +54,7 @@ public class ClientUser : EntityBase, IAggregateRoot
   public bool PhoneNumberVerfied { get; private set; }
 
   public string PhoneNumber { get; set; } = string.Empty;
+
+  [JsonIgnore]
+  public ICollection<PhoneValidation> PhoneCodes { get; set; } = new List<PhoneValidation>();
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Clean.Architecture.Core.Interfaces;
 using Clean.Architecture.Core.UserAggregate.Events;
 using Clean.Architecture.SharedKernel.Interfaces;
@@ -21,6 +22,7 @@ public class UserPhoneVerficationCodeSenderHandler : INotificationHandler<UserPh
   }
   public async Task Handle(UserPhoneVerficationCodeSenderEvent notification, CancellationToken cancellationToken)
   {
+    Guard.Against.Null(notification);
 
     var CodeGenerator = new Random();
 

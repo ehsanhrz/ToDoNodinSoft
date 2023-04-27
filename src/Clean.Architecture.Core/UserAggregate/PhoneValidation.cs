@@ -17,6 +17,8 @@ public class PhoneValidation : EntityBase, IAggregateRoot
 
   public DateTime ValidTime { get; set; }
 
+  public ClientUser? user { get; set; } = null;
+
   public string UserPhoneNumber { get; set; }
 
   public PhoneValidation(Guid UserID, int Code, string userPhoneNumber)

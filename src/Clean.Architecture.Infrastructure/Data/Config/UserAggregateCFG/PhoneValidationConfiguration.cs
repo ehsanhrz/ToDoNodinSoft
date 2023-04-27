@@ -12,9 +12,14 @@ public class PhoneValidationConfiguration : IEntityTypeConfiguration<PhoneValida
 {
   public void Configure(EntityTypeBuilder<PhoneValidation> builder)
   {
+    builder.ToTable("PhoneValidations");
+
     builder.HasKey(p => p.Id);
 
-    builder.Property(p => p.UserID).IsRequired();
+    builder.HasOne<ClientUser>(x => x.user)
+      .WithMany(x => x.PhoneCodes)
+      .HasForeignKey(x => x.UserID)
+      .OnDelete(DeleteBehavior.Restrict);
 
     builder.Property(p => p.UserPhoneNumber)
       .HasMaxLength(12)

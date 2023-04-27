@@ -17,7 +17,7 @@ public class FakeSmsSender : ICodeSender
   }
   public Task SendCode(int code, string phoneNumber)
   {
-    _logger.LogInformation("****************\n Not actually sending an sms to {phoneNumber} the Code {} \n *********", phoneNumber, code);
+    _logger.LogInformation("****************\n Not actually sending an sms to {phoneNumber} the Code {code} \n *********", phoneNumber, code);
     return Task.CompletedTask;
   }
 }

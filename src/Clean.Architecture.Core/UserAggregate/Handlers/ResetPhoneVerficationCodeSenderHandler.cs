@@ -7,6 +7,7 @@ using MediatR;
 using Clean.Architecture.Core.UserAggregate.Events;
 using Clean.Architecture.Core.Interfaces;
 using Clean.Architecture.SharedKernel.Interfaces;
+using Ardalis.GuardClauses;
 
 namespace Clean.Architecture.Core.UserAggregate.Handlers;
 public class ResetPhoneVerficationCodeSenderHandler : INotificationHandler<ResetPhoneVerficationCodeSenderEvent>
@@ -21,7 +22,7 @@ public class ResetPhoneVerficationCodeSenderHandler : INotificationHandler<Reset
   }
   public async Task Handle(ResetPhoneVerficationCodeSenderEvent notification, CancellationToken cancellationToken)
   {
-
+    Guard.Against.Null(notification);
     var CodeGenerator = new Random();
 
     int Code = CodeGenerator.Next(100000, 999999);

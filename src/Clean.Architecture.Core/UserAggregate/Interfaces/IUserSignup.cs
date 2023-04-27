@@ -18,7 +18,7 @@ public interface IUserSignup
 
   public Task<Result> CheckPhoneNumberVerficationCode(ClientUser user, int code);
 
-  public Task<Result<ClientUser>> CreateUser(string UserName, string PassWord);
+  public Task<Result<ClientUser>> CreateUser(string UserName, string PassWord, string PhoneNumber);
 
   public Task<Result> ChangeUserPhoneNumberForValidation(ClientUser user, string PhoneNumber);
 
