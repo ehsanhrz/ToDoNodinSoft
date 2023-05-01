@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Clean.Architecture.SharedKernel.Interfaces;
 using Clean.Architecture.SharedKernel;
 using System.Text.Json.Serialization;
+using Clean.Architecture.Core.ToDoAggregate;
 
 namespace Clean.Architecture.Core.UserAggregate;
 public class ClientUser : EntityBase, IAggregateRoot
@@ -57,4 +58,7 @@ public class ClientUser : EntityBase, IAggregateRoot
 
   [JsonIgnore]
   public ICollection<PhoneValidation> PhoneCodes { get; set; } = new List<PhoneValidation>();
+
+  [JsonIgnore]
+  public ICollection<ToDo> toDos { get; set; } = new List<ToDo>();
 }

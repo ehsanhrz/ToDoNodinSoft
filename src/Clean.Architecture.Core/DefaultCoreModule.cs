@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Clean.Architecture.Core.Interfaces;
 using Clean.Architecture.Core.Services;
+using Clean.Architecture.Core.ToDoAggregate.Interfaces;
+using Clean.Architecture.Core.ToDoAggregate.Services;
 using Clean.Architecture.Core.UserAggregate.Interfaces;
 using Clean.Architecture.Core.UserAggregate.Services;
 
@@ -21,6 +23,8 @@ public class DefaultCoreModule : Module
     builder.RegisterType<UserLoginService>()
       .As<IUserLogin>().InstancePerLifetimeScope();
 
+    builder.RegisterType<ToDoCRUD>()
+      .As<IToDoCRUD>().InstancePerLifetimeScope();
     
   }
 }
