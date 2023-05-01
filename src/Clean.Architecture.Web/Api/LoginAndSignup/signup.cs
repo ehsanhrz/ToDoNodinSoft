@@ -47,9 +47,9 @@ public class Signup : ControllerBase
         return BadRequest(response);
       }
     }
-    catch(Exception ex)
+    catch (Exception ex)
     {
-       _logger.LogInformation(ex.Message);
+      _logger.LogInformation(ex.Message);
       return Problem(title: "Internal server error", statusCode: 500);
     }
 
