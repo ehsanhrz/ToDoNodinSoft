@@ -74,4 +74,21 @@ public class ToDoCRUD : IToDoCRUD
     var UserToDosResult = await _repository.ListAsync(UserToDos);
     return UserToDosResult;
   }
+
+  public async Task<Result> UpdateUserToDos(IEnumerable<ToDo> dtos)
+  {
+    try
+    {
+
+      await _repository.UpdateRangeAsync(dtos, new CancellationToken());
+      await _repository.SaveChangesAsync(new CancellationToken());
+
+      return Result.Success();
+
+    }
+    catch (Exception ex)
+    {
+      return Result.Error(ex.Message);
+    }
+  }
 }

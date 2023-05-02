@@ -18,5 +18,5 @@ public interface IToDoCRUD
 
   public Task<Result> CreateUserToDos(IEnumerable<ToDo> dtos);
 
-
+  public Task<Result> UpdateUserToDos(IEnumerable<ToDo> dtos);
 }

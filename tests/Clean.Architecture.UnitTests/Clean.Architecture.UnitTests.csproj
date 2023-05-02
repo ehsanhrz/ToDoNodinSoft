@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\ToDoAggregate\Specifications\" />
     <Folder Include="Core\UserAggregate\Specifications\" />
   </ItemGroup>
 
