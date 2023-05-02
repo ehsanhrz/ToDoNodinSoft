@@ -1,4 +1,5 @@
-﻿using Clean.Architecture.Core.ToDoAggregate;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Clean.Architecture.Core.ToDoAggregate;
 using Clean.Architecture.Core.ToDoAggregate.Interfaces;
 using Clean.Architecture.Web.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -81,6 +82,21 @@ public class ToDoCrud : ControllerBase
   {
     try
     {
+      var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+      var handler = new JwtSecurityTokenHandler();
+      var decodedToken = handler.ReadJwtToken(token);
+      var idClaim = decodedToken.Claims.FirstOrDefault(c => c.Type == "Id");
+      if (idClaim != null)
+      {
+        var id = idClaim.Value;
+        foreach (var item in toDos)
+        {
+          if(item.UserId.ToString() != id)
+          {
+            return BadRequest("invalid User Action");
+          }
+        }
+      }
       var result = await _toDoCRUD.DeleteUserToDos(toDos);
       if (result.IsSuccess)
       {
@@ -103,6 +119,22 @@ public class ToDoCrud : ControllerBase
   {
     try
     {
+      var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+      var handler = new JwtSecurityTokenHandler();
+      var decodedToken = handler.ReadJwtToken(token);
+      var idClaim = decodedToken.Claims.FirstOrDefault(c => c.Type == "Id");
+      if (idClaim != null)
+      {
+        var id = idClaim.Value;
+        foreach (var item in toDos)
+        {
+          if (item.UserId.ToString() != id)
+          {
+            return BadRequest("invalid User Action");
+          }
+        }
+      }
+
       var result = await _toDoCRUD.CompleteUserToDos(toDos);
       if (result.IsSuccess)
       {
@@ -125,6 +157,21 @@ public class ToDoCrud : ControllerBase
   {
     try
     {
+      var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+      var handler = new JwtSecurityTokenHandler();
+      var decodedToken = handler.ReadJwtToken(token);
+      var idClaim = decodedToken.Claims.FirstOrDefault(c => c.Type == "Id");
+      if (idClaim != null)
+      {
+        var id = idClaim.Value;
+        foreach (var item in toDos)
+        {
+          if (item.UserId.ToString() != id)
+          {
+            return BadRequest("invalid User Action");
+          }
+        }
+      }
       var result = await _toDoCRUD.UpdateUserToDos(toDos);
       if (result.IsSuccess)
       {
