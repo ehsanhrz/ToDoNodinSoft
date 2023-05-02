@@ -7,11 +7,11 @@ using Clean.Architecture.Infrastructure.Data;
 using FastEndpoints.Swagger.Swashbuckle;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Autofac.Core;
 using Clean.Architecture.Core.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+
+
+
 using Clean.Architecture.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,22 +59,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//      options.TokenValidationParameters = new TokenValidationParameters
-//      {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = "nodinSoft",
-//        ValidAudience = "nodinsoft",
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("141585989784784ivueotiuewiour646468468468786786asdadasdasdasdasdasdasd"))
-//      };
-//    });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -122,7 +106,7 @@ using (var scope = app.Services.CreateScope())
   try
   {
     var context = services.GetRequiredService<AppDbContext>();
-    //                    context.Database.Migrate();
+    //context.Database.Migrate();
 
     context.Database.EnsureCreated();
     //SeedData.Initialize(services);
