@@ -48,6 +48,5 @@ public class TokenProviderService : ITokenProvider
     };
     var token = tokenHandler.CreateToken(tokenDescriptor);
     return Result.Success(tokenHandler.WriteToken(token));
-
   }
 }

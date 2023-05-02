@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Clean.Architecture.Web;
 
-public class JwtBearerOptionsSetup : IConfigureOptions<JwtBearerOptions>
+public class JwtBearerOptionsSetup : IConfigureNamedOptions<JwtBearerOptions>
 {
   private IOptions<JwtOptions> _options; 
   public JwtBearerOptionsSetup(IOptions<JwtOptions> options)
@@ -16,9 +16,9 @@ public class JwtBearerOptionsSetup : IConfigureOptions<JwtBearerOptions>
 
   }
 
-  public void Configure(JwtBearerOptions options)
+  public void Configure(string? name, JwtBearerOptions options)
   {
-    options.TokenValidationParameters = new()
+    options.TokenValidationParameters = new TokenValidationParameters()
     {
       ValidateAudience = true,
       ValidateIssuer = true,
@@ -28,5 +28,9 @@ public class JwtBearerOptionsSetup : IConfigureOptions<JwtBearerOptions>
       ValidAudience = _options.Value.Aduincerr,
       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Value.SecretKey))
     };
+  }
+  public void Configure(JwtBearerOptions options)
+  {
+    Configure(Options.DefaultName, options);
   }
 }

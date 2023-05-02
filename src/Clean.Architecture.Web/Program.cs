@@ -4,15 +4,15 @@ using Autofac.Extensions.DependencyInjection;
 using Clean.Architecture.Core;
 using Clean.Architecture.Infrastructure;
 using Clean.Architecture.Infrastructure.Data;
-using Clean.Architecture.Web;
-using FastEndpoints;
 using FastEndpoints.Swagger.Swashbuckle;
-using FastEndpoints.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Autofac.Core;
 using Clean.Architecture.Core.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Clean.Architecture.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +39,8 @@ builder.Services.Configure<ServiceConfig>(config =>
 });
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
-
+// JwtBearerOptionsSetup
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
   containerBuilder.RegisterModule(new DefaultCoreModule());
@@ -55,13 +56,54 @@ builder.Services.AddSwaggerGen(c =>
 
 
 builder.Services.AddControllers();
-// JwtBearerOptionsSetup
-builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//      options.TokenValidationParameters = new TokenValidationParameters
+//      {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = "nodinSoft",
+//        ValidAudience = "nodinsoft",
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("141585989784784ivueotiuewiour646468468468786786asdadasdasdasdasdasdasd"))
+//      };
+//    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+
+  c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+  {
+    In = ParameterLocation.Header,
+    Description = "Please enter token",
+    Name = "Authorization",
+    Type = SecuritySchemeType.Http,
+    BearerFormat = "JWT",
+    Scheme = "bearer"
+  });
+  c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
+
 
 var app = builder.Build();
 
