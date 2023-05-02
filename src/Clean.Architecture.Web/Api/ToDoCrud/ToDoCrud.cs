@@ -26,7 +26,7 @@ public class ToDoCrud : ControllerBase
 
   [AllowAnonymous]
   [HttpGet("GetUserToDos", Name = "GetUserToDos")]
-  public async Task<IActionResult> GetUserToDos([FromQuery] Guid userId)
+  public async Task<IActionResult> GetUserToDos([FromQuery] Guid? userId)
   {
     try
     {

@@ -68,7 +68,7 @@ public class ToDoCRUD : IToDoCRUD
     }
   }
 
-  public async Task<Result<ICollection<ToDo>>> GetUserToDos(Guid userId)
+  public async Task<Result<ICollection<ToDo>>> GetUserToDos(Guid? userId)
   {
     var UserToDos = new GetUserToDosSpecification(userId);
     var UserToDosResult = await _repository.ListAsync(UserToDos);

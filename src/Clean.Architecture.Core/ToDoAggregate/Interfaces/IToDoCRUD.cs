@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration.UserSecrets;
 namespace Clean.Architecture.Core.ToDoAggregate.Interfaces;
 public interface IToDoCRUD
 {
-  public Task<Result<ICollection<ToDo>>> GetUserToDos(Guid userId);
+  public Task<Result<ICollection<ToDo>>> GetUserToDos(Guid? userId);
 
   public Task<Result> CompleteUserToDos(IEnumerable<ToDo> dtos);
 

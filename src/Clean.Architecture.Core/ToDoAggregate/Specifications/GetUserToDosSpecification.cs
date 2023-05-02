@@ -8,8 +8,18 @@ using Ardalis.Specification;
 namespace Clean.Architecture.Core.ToDoAggregate.Specifications;
 public class GetUserToDosSpecification : Specification<ToDo>
 {
-  public GetUserToDosSpecification(Guid UserId)
+  public GetUserToDosSpecification(Guid? UserId)
   {
-    Query.Where(item => item.UserId == UserId );
+
+    if (UserId != null)
+    {
+      Query.Where(item => item.UserId == UserId);
+    }
+    else
+    {
+      //Query.Where(item => item.Id != null);
+      Query.IgnoreQueryFilters();
+    }
+        
   }
 }
