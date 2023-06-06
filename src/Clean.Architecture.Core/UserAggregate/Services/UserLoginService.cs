@@ -16,11 +16,11 @@ public class UserLoginService : IUserLogin
   {
     _repository = repository;
   }
-  public async Task<Result<ClientUser>> CheckUserNameAndPassWordLogin(string UserName, string PassWord)
+  public async Task<Result<ClientUser>> CheckUserNameAndPassWordLogin(string userName, string passWord)
   {
-    var CheckSpec = new CheckUserNameAndPassWordLogin(UserName, PassWord);
+    var checkSpec = new CheckUserNameAndPassWordLogin(userName, passWord);
 
-    var result = await _repository.FirstOrDefaultAsync(CheckSpec);
+    var result = await _repository.FirstOrDefaultAsync(checkSpec);
 
     if (result == null)
     {

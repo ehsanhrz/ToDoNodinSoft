@@ -52,23 +52,16 @@ public class ToDoCrud : ControllerBase
   {
     try
     {
-      var ToDos = new List<ToDo>();
+      var toDos = dTOs.Select(dto => new ToDo(dto.userID, dto.toDoTitle, dto.toDoDescription)).ToList();
 
-      foreach (var dto in dTOs)
-      {
-        ToDo toDo = new ToDo(dto.userID, dto.toDoTitle, dto.toDoDescription);
-        ToDos.Add(toDo);
-      }
-
-      var result = await _toDoCRUD.CreateUserToDos(ToDos);
+      var result = await _toDoCRUD.CreateUserToDos(toDos);
       if (result.IsSuccess)
       {
-        return Ok(result.Value);
+        return Ok(true);
       }
-      else
-      {
-        return BadRequest(result.Errors);
-      }
+
+      return BadRequest(result.Errors);
+      
     }
     catch (Exception ex)
     {
@@ -100,12 +93,11 @@ public class ToDoCrud : ControllerBase
       var result = await _toDoCRUD.DeleteUserToDos(toDos);
       if (result.IsSuccess)
       {
-        return Ok(result.Value);
+        return Ok(true);
       }
-      else
-      {
-        return BadRequest(result.Errors);
-      }
+      
+      return BadRequest(result.Errors);
+      
     }
     catch (Exception ex)
     {
@@ -138,7 +130,7 @@ public class ToDoCrud : ControllerBase
       var result = await _toDoCRUD.CompleteUserToDos(toDos);
       if (result.IsSuccess)
       {
-        return Ok(result.Value);
+        return Ok(true);
       }
       else
       {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Clean.Architecture.Core.ToDoAggregate;
+﻿using Clean.Architecture.Core.ToDoAggregate;
 using Clean.Architecture.Core.ToDoAggregate.Services;
 using Clean.Architecture.Core.UserAggregate;
 using Clean.Architecture.SharedKernel.Interfaces;
@@ -13,41 +8,40 @@ using Xunit;
 namespace Clean.Architecture.UnitTests.Core.ToDoAggregate.Services;
 public class ToDoCrudUnitTest
 {
-  private Mock<IRepository<ToDo>> _mockRepository;
-  private Mock<IRepository<ClientUser>> _mockRepositoryClientUser;
-  private ToDoCRUD _toDoCRUD;
+  
+  private readonly ToDoCrud _toDoCrud;
 
-  private readonly string _testUserName = "EhsanHrz";
-  private readonly string _testPassWord = "987987987";
-  private readonly string _testPhoneNumber = "09141178787";
+  private const string TestUserName = "EhsanHrz";
+  private const string TestPassWord = "987987987";
+  private const string TestPhoneNumber = "09141178787";
 
 
   private ClientUser CreateClientUser()
   {
-    return new ClientUser(_testUserName, _testPassWord, _testPhoneNumber);
+    return new ClientUser(TestUserName, TestPassWord, TestPhoneNumber);
   }
 
   public ToDoCrudUnitTest()
   {
-    _mockRepository = new Mock<IRepository<ToDo>>();
-    _mockRepositoryClientUser = new Mock<IRepository<ClientUser>>();
-    _toDoCRUD = new ToDoCRUD(_mockRepository.Object);
+    Mock<IRepository<ToDo>> mockRepository = new();
+    
+    _toDoCrud = new ToDoCrud(mockRepository.Object);
   }
 
   [Fact]
   public async Task CreateUserToDoProperly()
   {
     // first we create a test user to mock the entity ownership
-    var TestUser = CreateClientUser();
+    var testUser = CreateClientUser();
 
     // after that we create a test User We call the CreateUserToDos service to check unit.
-    var TestTodo = new ToDo(TestUser.Id, "Test", "Test");
-    var ListTestTodo = new List<ToDo>
+    var testTodo = new ToDo(testUser.Id, "Test", "Test");
+    var listTestTodo = new List<ToDo>
     {
-      TestTodo
+      testTodo
     };
 
-    var result2 = await _toDoCRUD.CreateUserToDos(ListTestTodo);
+    var result2 = await _toDoCrud.CreateUserToDos(listTestTodo);
 
     Assert.NotNull(result2);
     Assert.Equal(Ardalis.Result.ResultStatus.Ok, result2.Status);
@@ -58,21 +52,21 @@ public class ToDoCrudUnitTest
   public async Task CompleteUserToDo()
   {
     // first we create a test user to mock the entity ownership
-    var TestUser = CreateClientUser();
+    var testUser = CreateClientUser();
 
     // after that we create a test User We call the CreateUserToDos service to check unit.
-    var TestTodo = new ToDo(TestUser.Id, "Test", "Test");
-    var ListTestTodo = new List<ToDo>
+    var testTodo = new ToDo(testUser.Id, "Test", "Test");
+    var listTestTodo = new List<ToDo>
     {
-      TestTodo
+      testTodo
     };
 
-    foreach (ToDo toDo in ListTestTodo)
+    foreach (ToDo toDo in listTestTodo)
     {
       toDo.CompleteTheTask();
     }
 
-    var result2 = await _toDoCRUD.CompleteUserToDos(ListTestTodo);
+    var result2 = await _toDoCrud.CompleteUserToDos(listTestTodo);
 
 
     Assert.NotNull(result2);
@@ -83,16 +77,16 @@ public class ToDoCrudUnitTest
   public async Task DeleteUserTodoO()
   {
     // first we create a test user to mock the entity ownership
-    var TestUser = CreateClientUser();
+    var testUser = CreateClientUser();
 
     // after that we create a test User We call the CreateUserToDos service to check unit.
-    var TestTodo = new ToDo(TestUser.Id, "Test", "Test");
-    var ListTestTodo = new List<ToDo>
+    var testTodo = new ToDo(testUser.Id, "Test", "Test");
+    var listTestTodo = new List<ToDo>
     {
-      TestTodo
+      testTodo
     };
 
-    var result2 = await _toDoCRUD.DeleteUserToDos(ListTestTodo);
+    var result2 = await _toDoCrud.DeleteUserToDos(listTestTodo);
 
 
     Assert.NotNull(result2);
@@ -103,16 +97,16 @@ public class ToDoCrudUnitTest
   public async Task UpdateUserToDos()
   {
     // first we create a test user to mock the entity ownership
-    var TestUser = CreateClientUser();
+    var testUser = CreateClientUser();
 
     // after that we create a test User We call the CreateUserToDos service to check unit.
-    var TestTodo = new ToDo(TestUser.Id, "Test", "Test");
-    var ListTestTodo = new List<ToDo>
+    var testTodo = new ToDo(testUser.Id, "Test", "Test");
+    var listTestTodo = new List<ToDo>
     {
-      TestTodo
+      testTodo
     };
 
-    var result2 = await _toDoCRUD.UpdateUserToDos(ListTestTodo);
+    var result2 = await _toDoCrud.UpdateUserToDos(listTestTodo);
 
 
     Assert.NotNull(result2);

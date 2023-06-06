@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using Clean.Architecture.Core.UserAggregate;
 using Clean.Architecture.SharedKernel.Interfaces;
 using Clean.Architecture.SharedKernel;
@@ -26,7 +21,7 @@ public class ToDo : EntityBase, IAggregateRoot
   }
   public Guid UserId { get; set; }
 
-  public string ToDoTitle { get; private set; } = string.Empty;
+  public string ToDoTitle { get;  set; } = string.Empty;
 
   public string ToDoDescription { get; set;} = string.Empty;
 

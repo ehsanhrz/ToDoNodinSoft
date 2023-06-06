@@ -9,13 +9,13 @@ namespace Clean.Architecture.Core.UserAggregate.Services;
 public class UserSignupService : IUserSignup
 {
 
-    private IRepository<ClientUser> _clientUserRepository;
-    private IRepository<PhoneValidation> _phoneValidationRepository;
-    private IMediator _mediator;
-    public UserSignupService(IRepository<ClientUser> RepositoryClientUser, IRepository<PhoneValidation> RepositoryPhoneValidation, IMediator mediator)
+    private readonly IRepository<ClientUser> _clientUserRepository;
+    private readonly IRepository<PhoneValidation> _phoneValidationRepository;
+    private readonly IMediator _mediator;
+    public UserSignupService(IRepository<ClientUser> repositoryClientUser, IRepository<PhoneValidation> repositoryPhoneValidation, IMediator mediator)
     {
-        _clientUserRepository = RepositoryClientUser;
-        _phoneValidationRepository = RepositoryPhoneValidation;
+        _clientUserRepository = repositoryClientUser;
+        _phoneValidationRepository = repositoryPhoneValidation;
         _mediator = mediator;
     }
 

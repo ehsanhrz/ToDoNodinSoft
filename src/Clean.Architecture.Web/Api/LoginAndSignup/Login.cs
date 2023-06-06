@@ -22,20 +22,21 @@ public class Login : ControllerBase
     {
         try
         {
-            var CheckResult = await _userLogin.CheckUserNameAndPassWordLogin(dto.username, dto.password);
+            var checkResult = await _userLogin.CheckUserNameAndPassWordLogin(dto.username, dto.password);
 
-            if (CheckResult.IsSuccess)
+            if (checkResult.IsSuccess)
             {
-                var Token = _tokenProvider.Generate(CheckResult.Value);
-                var reesponse = new
+                var token = _tokenProvider.Generate(checkResult.Value);
+                var response = new
                 {
-                    token = Token.Value,
+                    userDetails = checkResult.Value,
+                    token = token.Value
                 };
-                return Ok(reesponse);
+                return Ok(response);
             }
             else
             {
-                return BadRequest(CheckResult.Errors);
+                return BadRequest(checkResult.Errors);
             }
         }
         catch (Exception ex)

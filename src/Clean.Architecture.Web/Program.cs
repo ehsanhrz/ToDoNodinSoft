@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Clean.Architecture.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
@@ -24,6 +25,15 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 {
   options.CheckConsentNeeded = context => true;
   options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy(name: MyAllowSpecificOrigins,
+    policy  =>
+    {
+      policy.WithOrigins("http://localhost:4200","http://localhost:57679").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
 });
 
 string? connectionString = builder.Configuration.GetConnectionString("SqliteConnection");  //Configuration.GetConnectionString("DefaultConnection");
@@ -120,6 +130,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseAuthorization();
 
 app.MapControllers();

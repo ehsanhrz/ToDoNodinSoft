@@ -23,7 +23,7 @@ public class DefaultCoreModule : Module
     builder.RegisterType<UserLoginService>()
       .As<IUserLogin>().InstancePerLifetimeScope();
 
-    builder.RegisterType<ToDoCRUD>()
+    builder.RegisterType<ToDoCrud>()
       .As<IToDoCRUD>().InstancePerLifetimeScope();
     
   }

@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ardalis.Result;
+﻿using Ardalis.Result;
 using Clean.Architecture.Core.ToDoAggregate.Interfaces;
-using Clean.Architecture.Core.ToDoAggregate.Records;
 using Clean.Architecture.Core.ToDoAggregate.Specifications;
 using Clean.Architecture.SharedKernel.Interfaces;
 
 namespace Clean.Architecture.Core.ToDoAggregate.Services;
-public class ToDoCRUD : IToDoCRUD
+public class ToDoCrud : IToDoCRUD
 {
-  private IRepository<ToDo> _repository;
-  public ToDoCRUD(IRepository<ToDo> repository)
+  private readonly IRepository<ToDo> _repository;
+  public ToDoCrud(IRepository<ToDo> repository)
   {
     _repository = repository;
   }
 
-  public async Task<Result> CompleteUserToDos(IEnumerable<ToDo> dtos)
+  public async Task<Result> CompleteUserToDos(IEnumerable<ToDo> dataTransferObjects)
   {
     try
     {
-      foreach (ToDo toDo in dtos)
+      var transferObjects = dataTransferObjects.ToList();
+      foreach (ToDo toDo in transferObjects)
       {
         toDo.CompleteTheTask();
       }
 
-      await _repository.UpdateRangeAsync(dtos, new CancellationToken());
-      await _repository.SaveChangesAsync(new CancellationToken());
+      await _repository.UpdateRangeAsync(transferObjects);
+      await _repository.SaveChangesAsync();
 
       return Result.Success();
 
@@ -40,12 +35,12 @@ public class ToDoCRUD : IToDoCRUD
     
   }
 
-  public async Task<Result> CreateUserToDos(IEnumerable<ToDo> dtos)
+  public async Task<Result> CreateUserToDos(IEnumerable<ToDo> dataTransferObjects)
   {
     try
     {
-      await _repository.AddRangeAsync(dtos, new CancellationToken());
-      await _repository.SaveChangesAsync(new CancellationToken());
+      await _repository.AddRangeAsync(dataTransferObjects);
+      await _repository.SaveChangesAsync();
       return Result.Success();
     }
     catch (Exception ex)
@@ -54,12 +49,12 @@ public class ToDoCRUD : IToDoCRUD
     }
   }
 
-  public async Task<Result> DeleteUserToDos(IEnumerable<ToDo> dtos)
+  public async Task<Result> DeleteUserToDos(IEnumerable<ToDo> dataTransferObjects)
   {
     try
     {
-      await _repository.DeleteRangeAsync(dtos, new CancellationToken());
-      await _repository.SaveChangesAsync(new CancellationToken());
+      await _repository.DeleteRangeAsync(dataTransferObjects);
+      await _repository.SaveChangesAsync();
       return Result.Success();
     }
     catch (Exception ex)
@@ -70,18 +65,18 @@ public class ToDoCRUD : IToDoCRUD
 
   public async Task<Result<ICollection<ToDo>>> GetUserToDos(Guid? userId)
   {
-    var UserToDos = new GetUserToDosSpecification(userId);
-    var UserToDosResult = await _repository.ListAsync(UserToDos);
-    return UserToDosResult;
+    var userToDos = new GetUserToDosSpecification(userId);
+    var userToDosResult = await _repository.ListAsync(userToDos);
+    return userToDosResult;
   }
 
-  public async Task<Result> UpdateUserToDos(IEnumerable<ToDo> dtos)
+  public async Task<Result> UpdateUserToDos(IEnumerable<ToDo> dataTransferObjects)
   {
     try
     {
 
-      await _repository.UpdateRangeAsync(dtos, new CancellationToken());
-      await _repository.SaveChangesAsync(new CancellationToken());
+      await _repository.UpdateRangeAsync(dataTransferObjects);
+      await _repository.SaveChangesAsync();
 
       return Result.Success();
 
