@@ -16,7 +16,7 @@ public class ToDo : EntityBase, IAggregateRoot
   {
     this.UserId = userId;
     this.ToDoTitle = toDoTitle;
-    this.ToDoDescription = toDoDescription != null ? toDoDescription : "";
+    this.ToDoDescription = toDoDescription ?? "";
     IsCompleted = false;
   }
   public Guid UserId { get; set; }
